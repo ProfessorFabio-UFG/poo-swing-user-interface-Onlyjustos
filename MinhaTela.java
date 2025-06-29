@@ -5,6 +5,10 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -27,6 +31,9 @@ public class MinhaTela extends JFrame {
 	
 	
 	public MinhaTela() {
+		setVisible(true);
+        setBounds(100, 100, 600, 600);
+		setResizable(false);
 		setPreferredSize(new Dimension(600, 600));
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -178,29 +185,54 @@ public class MinhaTela extends JFrame {
 		panel_2.setBounds(10, 342, 563, 113);
 		desktopPane.add(panel_2);
 		jmiSalvar.addActionListener((ActionEvent e) -> {
-					if("".equals(codTextField.getText())){
-						codTextField.setText("NULL");
-					}
-					if("".equals(nomeTextField.getText())){
-						nomeTextField.setText("NULL");
-					}
-                    String textoDigitado = codTextField.getText(); 
-					String nomeDigitado = nomeTextField.getText();
 					
-                    System.out.println("Cod: " + textoDigitado); 
-                    System.out.println("Nome: "+ nomeDigitado);
-					if(masculinoButton.isSelected()){
-						System.out.println("Sexo: Masculino");
+
+					
+					File diretorio = new File("D:\\programacao\\POO-UFG\\Swinggit");
+       				diretorio.mkdir();
+					File arquivo = new File(diretorio , "arquivoCurriculo.txt");
+					try (FileWriter f = new FileWriter(arquivo);){
+						PrintWriter pw = new PrintWriter(f);
+						if("".equals(codTextField.getText())){
+							pw.println("Cod: NULL");
+							pw.flush();
+						}
+						else {
+							String CodDigitado = codTextField.getText(); 
+							pw.println("Cod: " + CodDigitado); 
+							pw.flush();
+						}
+						if("".equals(nomeTextField.getText())){
+							pw.println("Nome: NULL");
+							pw.flush();
+						}
+						else{
+							String nomeDigitado = nomeTextField.getText();
+							pw.println("Nome: "+ nomeDigitado);
+							pw.flush();
+						}
+						if(masculinoButton.isSelected()){
+							pw.println("Sexo: Masculino");
+							pw.flush();
+						}
+						else if(femininoButton.isSelected()){
+							pw.println("Sexo: Feminino");
+							pw.flush();
+						}
+						else{
+							pw.println("Sexo: NULL");
+							pw.flush();
+						}
+						pw.println("Atuação: "+atuacaoComboBox.getSelectedItem()); 
+						pw.flush();
+						pw.println("Interesse: "+interesseComboBox.getSelectedItem()); 
+						pw.flush();
+						pw.println(textArea.getText());
+						pw.flush();
+						
+					} catch (IOException io) {
+						System.out.println("Erro ao escrever no arquivo");
 					}
-					else if(femininoButton.isSelected()){
-						System.out.println("Sexo: Feminino");
-					}
-					else{
-						System.out.println("Sexo: NULL");
-					}
-					System.out.println("Atuação: "+atuacaoComboBox.getSelectedItem()); 
-					System.out.println("Interesse: "+interesseComboBox.getSelectedItem()); 
-					System.out.println(textArea.getText());
                 });
 		
 	}
