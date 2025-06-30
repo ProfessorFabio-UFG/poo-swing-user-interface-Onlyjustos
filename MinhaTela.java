@@ -188,7 +188,7 @@ public class MinhaTela extends JFrame {
 					
 
 					
-					File diretorio = new File("D:\\programacao\\POO-UFG\\Swinggit");
+					File diretorio = new File("poo-swing-user-interface-Onlyjustos");
        				diretorio.mkdir();
 					File arquivo = new File(diretorio , "arquivoCurriculo.txt");
 					try (FileWriter f = new FileWriter(arquivo);){
